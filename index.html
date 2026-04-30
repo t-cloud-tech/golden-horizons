@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Horizons — Dubai & Abu Dhabi Luxury Tourism</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6914;
+    --sand: #F5EDD6;
+    --sand-light: #FDF8EE;
+    --night: #0A0A0F;
+    --deep: #12121A;
+    --mid: #1E1E2C;
+    --surface: #252535;
+    --text: #F0EAD6;
+    --text-muted: rgba(240,234,214,0.6);
+    --accent: #4AC8E8;
+    --accent2: #E84A6E;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--night);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transition: transform 0.1s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 40px; height: 40px;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99998;
+    transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Loader */
+  #loader {
+    position: fixed; inset: 0;
+    background: var(--night);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .loader-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--gold);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .loader-bar {
+    width: 200px; height: 1px;
+    background: rgba(201,168,76,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  .loader-bar::after {
+    content: '';
+    position: absolute;
+    left: -100%; top: 0;
+    width: 100%; height: 100%;
+    background: var(--gold);
+    animation: loadSlide 2s 0.5s ease forwards;
+  }
+  @keyframes loadSlide { to { left: 100%; } }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 1.5rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(10,10,15,0.95), transparent);
+    backdrop-filter: blur(10px);
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(10,10,15,0.97);
+    padding: 1rem 4rem;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--text); }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--night);
+    background: var(--gold);
+    padding: 0.7rem 1.8rem;
+    border: none;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* Hero */
+  #hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1920&q=80') center/cover no-repeat;
+    transform: scale(1.1);
+    animation: heroZoom 20s ease infinite alternate;
+    filter: brightness(0.5);
+  }
+  @keyframes heroZoom {
+    from { transform: scale(1.1) translateX(-1%); }
+    to { transform: scale(1.05) translateX(1%); }
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(10,10,15,0.3) 0%, transparent 40%, rgba(10,10,15,0.7) 100%);
+  }
+  .hero-particles {
+    position: absolute; inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .particle {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: var(--gold);
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleFloat linear infinite;
+  }
+  @keyframes particleFloat {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+    padding: 0 2rem;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 0.5rem 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 2.5s forwards;
+  }
+  .hero-badge::before, .hero-badge::after {
+    content: '◆';
+    font-size: 0.5em;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 300;
+    line-height: 0.9;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 2.7s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+  .hero-subtitle {
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto 3rem;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.8s 2.9s forwards;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 3.1s forwards;
+  }
+  .btn-primary {
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--night);
+    background: var(--gold);
+    padding: 1.1rem 2.8rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+  }
+  .btn-primary:hover::after { width: 300px; height: 300px; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 50px rgba(201,168,76,0.3); }
+  .btn-outline {
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+    background: transparent;
+    padding: 1.1rem 2.8rem;
+    text-decoration: none;
+    border: 1px solid rgba(240,234,214,0.3);
+    transition: all 0.3s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 3rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 3.5s forwards;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.5); opacity: 0.3; }
+  }
+
+  /* Stats Bar */
+  .stats-bar {
+    background: var(--mid);
+    border-top: 1px solid rgba(201,168,76,0.15);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    padding: 2.5rem 4rem;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+  }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+  }
+
+  /* Section Common */
+  section { position: relative; }
+  .section-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-tag::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .section-title em { color: var(--gold); font-style: italic; }
+  .section-text {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.9;
+    max-width: 600px;
+  }
+
+  /* About Section */
+  #about {
+    padding: 10rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-img-main {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.85);
+  }
+  .about-img-accent {
+    position: absolute;
+    bottom: -3rem; right: -3rem;
+    width: 55%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 6px solid var(--night);
+    filter: brightness(0.85);
+  }
+  .about-badge-float {
+    position: absolute;
+    top: 2rem; left: -3rem;
+    background: var(--gold);
+    color: var(--night);
+    padding: 1.5rem;
+    text-align: center;
+    width: 120px;
+  }
+  .about-badge-float .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    display: block;
+    line-height: 1;
+  }
+  .about-badge-float .lbl {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .about-content { }
+  .about-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .feature-item {
+    padding: 1.5rem;
+    border: 1px solid rgba(201,168,76,0.15);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .feature-item:hover { border-color: rgba(201,168,76,0.4); }
+  .feature-item:hover::before { opacity: 1; }
+  .feature-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .feature-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .feature-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Destinations */
+  #destinations {
+    padding: 8rem 4rem;
+    background: var(--deep);
+  }
+  .dest-header {
+    text-align: center;
+    margin-bottom: 5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .dest-header .section-tag { justify-content: center; }
+  .dest-header .section-tag::before { display: none; }
+  .dest-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .dest-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+  }
+  .dest-card:first-child { grid-row: 1 / 3; }
+  .dest-card img {
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.5s;
+    filter: brightness(0.7);
+  }
+  .dest-card:first-child img { min-height: 580px; }
+  .dest-card:hover img { transform: scale(1.08); filter: brightness(0.5); }
+  .dest-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,10,15,0.9) 0%, transparent 60%);
+    transition: all 0.4s;
+  }
+  .dest-card:hover .dest-overlay {
+    background: linear-gradient(to top, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 100%);
+  }
+  .dest-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 2rem;
+    transform: translateY(0);
+    transition: transform 0.4s;
+  }
+  .dest-city {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .dest-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+  }
+  .dest-card:first-child .dest-name { font-size: 2.8rem; }
+  .dest-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .dest-card:hover .dest-desc { max-height: 100px; }
+  .dest-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 1rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s 0.1s;
+  }
+  .dest-card:hover .dest-arrow { opacity: 1; transform: translateX(0); }
+
+  /* Experiences */
+  #experiences {
+    padding: 10rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .exp-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 5rem;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .exp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .exp-card {
+    background: var(--mid);
+    border: 1px solid rgba(201,168,76,0.1);
+    overflow: hidden;
+    transition: all 0.4s;
+    position: relative;
+  }
+  .exp-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(201,168,76,0.4);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  .exp-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s;
+    filter: brightness(0.8);
+  }
+  .exp-card:hover .exp-img { transform: scale(1.05); }
+  .exp-body {
+    padding: 2rem;
+  }
+  .exp-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+  .exp-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+    color: var(--text);
+  }
+  .exp-desc {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+  .exp-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .exp-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+  }
+  .exp-price span {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    display: block;
+    margin-top: -0.2rem;
+  }
+  .exp-btn {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 0.6rem 1.3rem;
+    background: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Outfit', sans-serif;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .exp-btn:hover { background: var(--gold); color: var(--night); }
+
+  /* Parallax Banner */
+  .parallax-banner {
+    height: 70vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+  }
+  .parallax-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1547346905-57f6f8958c1c?w=1920&q=80') center/cover no-repeat;
+    transform: translateY(0);
+    filter: brightness(0.4);
+  }
+  .parallax-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 2rem;
+  }
+  .parallax-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+  .parallax-content em { color: var(--gold); font-style: italic; }
+  .parallax-content p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 550px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.8;
+  }
+
+  /* Itinerary */
+  #itinerary {
+    padding: 10rem 4rem;
+    background: var(--deep);
+  }
+  .itin-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .itin-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+  .itin-header .section-tag { justify-content: center; }
+  .itin-header .section-tag::before { display: none; }
+  .itin-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+  }
+  .itin-tab {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.8rem;
+    border: 1px solid rgba(201,168,76,0.2);
+    background: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.3s;
+  }
+  .itin-tab.active, .itin-tab:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--night);
+  }
+  .itin-content { display: none; }
+  .itin-content.active { display: block; }
+  .itin-days {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .day-card {
+    background: var(--surface);
+    padding: 2rem;
+    border-left: 2px solid var(--gold);
+    position: relative;
+    transition: all 0.3s;
+  }
+  .day-card:hover {
+    background: var(--mid);
+    transform: translateX(5px);
+  }
+  .day-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: rgba(201,168,76,0.2);
+    position: absolute;
+    top: 1rem; right: 1.5rem;
+    line-height: 1;
+  }
+  .day-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .day-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+  .day-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .day-items li {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.5;
+  }
+  .day-items li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+
+  /* Gallery */
+  #gallery {
+    padding: 5rem 4rem;
+  }
+  .gallery-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 250px);
+    gap: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .gallery-item:nth-child(1) { grid-column: 1/3; }
+  .gallery-item:nth-child(4) { grid-column: 3/5; }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s;
+    filter: brightness(0.8) saturate(0.9);
+  }
+  .gallery-item:hover img { transform: scale(1.1); filter: brightness(1) saturate(1.1); }
+  .gallery-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(10,10,15,0.8), transparent);
+    transform: translateY(100%);
+    transition: transform 0.3s;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: var(--text);
+  }
+  .gallery-item:hover .gallery-label { transform: translateY(0); }
+
+  /* Testimonials */
+  #testimonials {
+    padding: 10rem 4rem;
+    background: var(--mid);
+    overflow: hidden;
+  }
+  .test-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+  .test-header .section-tag { justify-content: center; }
+  .test-header .section-tag::before { display: none; }
+  .test-track {
+    display: flex;
+    gap: 2rem;
+    animation: testScroll 30s linear infinite;
+    width: max-content;
+  }
+  .test-track:hover { animation-play-state: paused; }
+  @keyframes testScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .test-card {
+    width: 380px;
+    flex-shrink: 0;
+    background: var(--surface);
+    padding: 2.5rem;
+    border: 1px solid rgba(201,168,76,0.1);
+    position: relative;
+  }
+  .test-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    color: var(--gold);
+    line-height: 0.5;
+    margin-bottom: 1rem;
+    opacity: 0.4;
+  }
+  .test-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+  .test-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .test-avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(201,168,76,0.3);
+  }
+  .test-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .test-loc {
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+  .stars {
+    color: var(--gold);
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Contact / Book */
+  #contact {
+    padding: 10rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    align-items: center;
+  }
+  .contact-info .section-text { margin-bottom: 3rem; }
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem;
+    border: 1px solid rgba(201,168,76,0.1);
+    transition: border-color 0.3s;
+  }
+  .contact-item:hover { border-color: rgba(201,168,76,0.3); }
+  .contact-icon {
+    width: 44px; height: 44px;
+    background: rgba(201,168,76,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .contact-detail-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+  .contact-detail-text strong { color: var(--text); font-weight: 400; display: block; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.2rem; }
+  .booking-form {
+    background: var(--mid);
+    padding: 3rem;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+  .form-group label {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid rgba(201,168,76,0.15);
+    color: var(--text);
+    padding: 0.9rem 1rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.3s;
+    -webkit-appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group select option { background: var(--surface); }
+  .form-group textarea { resize: none; height: 100px; }
+  .form-submit {
+    width: 100%;
+    background: var(--gold);
+    color: var(--night);
+    border: none;
+    padding: 1.2rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* Footer */
+  footer {
+    background: #050508;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 6rem 4rem 3rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+    max-width: 1400px;
+    margin: 0 auto 5rem;
+  }
+  .footer-brand .nav-logo { font-size: 1.8rem; display: block; margin-bottom: 1.5rem; text-decoration: none; }
+  .footer-about {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    max-width: 300px;
+  }
+  .social-links { display: flex; gap: 1rem; }
+  .social-link {
+    width: 40px; height: 40px;
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+  .footer-col h4 {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .footer-links a {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(201,168,76,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-copy {
+    font-size: 0.78rem;
+    color: rgba(240,234,214,0.3);
+  }
+
+  /* 3D Floating Elements */
+  .float-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    animation: orbFloat 8s ease-in-out infinite;
+  }
+  .orb1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(201,168,76,0.06), transparent 70%);
+    top: 10%; right: -10%;
+  }
+  .orb2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(74,200,232,0.04), transparent 70%);
+    bottom: 20%; left: -5%;
+    animation-delay: -4s;
+  }
+  @keyframes orbFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(5deg); }
+  }
+
+  /* Fade in animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* Gold line divider */
+  .gold-divider {
+    width: 80px; height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    margin: 1.5rem 0;
+  }
+
+  /* 3D Card Tilt Effect */
+  .tilt-card {
+    transition: transform 0.1s ease;
+    transform-style: preserve-3d;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    nav { padding: 1.5rem 2rem; }
+    nav.scrolled { padding: 1rem 2rem; }
+    .nav-links { display: none; }
+    #about { grid-template-columns: 1fr; gap: 3rem; padding: 6rem 2rem; }
+    .about-img-accent { display: none; }
+    .about-badge-float { display: none; }
+    #destinations { padding: 6rem 2rem; }
+    .dest-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .dest-card:first-child { grid-row: auto; grid-column: 1/3; }
+    #experiences { padding: 6rem 2rem; }
+    .exp-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 200px); }
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(4) { grid-column: auto; }
+    #contact { grid-template-columns: 1fr; gap: 4rem; padding: 6rem 2rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    footer { padding: 4rem 2rem 2rem; }
+    #itinerary { padding: 6rem 2rem; }
+    #gallery { padding: 4rem 2rem; }
+    #testimonials { padding: 6rem 2rem; }
+  }
+  @media (max-width: 600px) {
+    .exp-grid { grid-template-columns: 1fr; }
+    .dest-grid { grid-template-columns: 1fr; }
+    .dest-card:first-child { grid-column: auto; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+    .gallery-item { height: 200px; }
+    .about-features { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Floating Orbs -->
+<div class="float-orb orb1"></div>
+<div class="float-orb orb2"></div>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-logo">Golden Horizons</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- Navigation -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Golden<span> Horizons</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#experiences">Experiences</a></li>
+    <li><a href="#itinerary">Itineraries</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Luxury Tourism · UAE</div>
+    <h1 class="hero-title">
+      Where Dreams<br>Meet the<em>Desert Sky</em>
+    </h1>
+    <p class="hero-subtitle">Discover the unmatched opulence of Dubai and Abu Dhabi — two jewels of the Arabian Gulf that redefine luxury, culture, and wonder.</p>
+    <div class="hero-btns">
+      <a href="#destinations" class="btn-primary">Explore UAE</a>
+      <a href="#experiences" class="btn-outline">View Experiences</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-num" data-target="16">0</span>
+    <span class="stat-label">Million Annual Visitors</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="200">0</span>
+    <span class="stat-label">Nationalities Welcomed</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="98">0</span>
+    <span class="stat-label">% Client Satisfaction</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="12">0</span>
+    <span class="stat-label">Years of Excellence</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="500">0</span>
+    <span class="stat-label">Curated Experiences</span>
+  </div>
+</div>
+
+<!-- About -->
+<section id="about">
+  <div class="about-visual reveal-left">
+    <img src="C:\Users\ttirt\Downloads\images\WhatsApp Image 2025-12-02 at 14.56.14_9f796369.jpg" alt="Dubai luxury" class="about-img-main">
+    <img src="C:\Users\ttirt\Downloads\images\WhatsApp Image 2026-01-02 at 1.38.18 PM (1).jpeg" alt="Abu Dhabi" class="about-img-accent">
+    <div class="about-badge-float">
+      <span class="num">#1</span>
+      <span class="lbl">Luxury Destination UAE</span>
+    </div>
+  </div>
+  <div class="about-content reveal-right">
+    <div class="section-tag">About UAE Tourism</div>
+    <h2 class="section-title">
+      Two Cities,<br>One <em>Extraordinary</em><br>Journey
+    </h2>
+    <div class="gold-divider"></div>
+    <p class="section-text">The United Arab Emirates is the world's ultimate luxury destination — where futuristic skyscrapers tower over ancient souks, where the world's finest dining meets 1,000-year-old Bedouin traditions, and where every experience is crafted to exceed imagination.</p>
+    <p class="section-text" style="margin-top:1rem;">From Dubai's iconic Burj Khalifa and man-made islands to Abu Dhabi's spectacular Sheikh Zayed Grand Mosque and Formula 1 circuit — this is a land that turns dreams into reality.</p>
+    <div class="about-features">
+      <div class="feature-item tilt-card">
+        <span class="feature-icon">🏙️</span>
+        <div class="feature-title">World-Record Architecture</div>
+        <div class="feature-desc">Tallest buildings, largest malls, most ambitious urban designs</div>
+      </div>
+      <div class="feature-item tilt-card">
+        <span class="feature-icon">🌟</span>
+        <div class="feature-title">7-Star Hospitality</div>
+        <div class="feature-desc">Burj Al Arab, Emirates Palace — hospitality beyond imagination</div>
+      </div>
+      <div class="feature-item tilt-card">
+        <span class="feature-icon">🛍️</span>
+        <div class="feature-title">Shopping Paradise</div>
+        <div class="feature-desc">From gold souks to Dubai Mall — world's finest retail</div>
+      </div>
+      <div class="feature-item tilt-card">
+        <span class="feature-icon">🍽️</span>
+        <div class="feature-title">Culinary Excellence</div>
+        <div class="feature-desc">Michelin-starred restaurants and authentic Emirati cuisine</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Destinations -->
+<section id="destinations">
+  <div class="dest-header reveal">
+    <div class="section-tag">Discover</div>
+    <h2 class="section-title">Iconic <em>Landmarks</em></h2>
+    <p style="color:var(--text-muted);font-size:0.95rem;line-height:1.8;margin-top:1rem;">Every corner of Dubai and Abu Dhabi tells a story of ambition, beauty, and cultural richness.</p>
+  </div>
+  <div class="dest-grid">
+    <a class="dest-card" href="#contact">
+      <img src="C:\Users\ttirt\Downloads\images\WhatsApp Image 2025-12-02 at 15.08.56_63d79d72.jpg" alt="Burj Khalifa Dubai">
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-city">Dubai</div>
+        <div class="dest-name">Burj Khalifa</div>
+        <div class="dest-desc">The world's tallest building at 828m — an engineering marvel offering unparalleled views across the desert and Gulf waters. Visit the observation deck at Level 124 for a once-in-a-lifetime panorama.</div>
+        <div class="dest-arrow">Explore →</div>
+      </div>
+    </a>
+    <a class="dest-card" href="#contact">
+      <img src="C:\Users\ttirt\Downloads\images\WhatsApp Image 2025-08-26 at 18.04.14_396bf3ed.jpg" alt="Sheikh Zayed Mosque">
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-city">Abu Dhabi</div>
+        <div class="dest-name">Sheikh Zayed Grand Mosque</div>
+        <div class="dest-desc">One of the world's largest mosques — a masterpiece of Islamic architecture featuring the world's largest hand-knotted carpet.</div>
+        <div class="dest-arrow">Explore →</div>
+      </div>
+    </a>
+    <a class="dest-card" href="#contact">
+      <img src="C:\Users\ttirt\Downloads\images\WhatsApp Image 2025-12-15 at 18.27.40_b39c8bba.jpg" alt="Palm Jumeirah">
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-city">Dubai</div>
+        <div class="dest-name">Palm Jumeirah</div>
+        <div class="dest-desc">The world's largest artificial island — home to Atlantis resort, ultra-luxury villas, and beachfront dining.</div>
+        <div class="dest-arrow">Explore →</div>
+      </div>
+    </a>
+    <a class="dest-card" href="#contact">
+      <img src="C:\Users\ttirt\Downloads\images\IMG-20251202-WA0009.jpg" alt="Dubai Creek">
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-city">Dubai</div>
+        <div class="dest-name">Dubai Creek & Gold Souk</div>
+        <div class="dest-desc">Experience old Dubai's soul — traditional abra rides across the creek and the legendary Gold Souk market.</div>
+        <div class="dest-arrow">Explore →</div>
+      </div>
+    </a>
+    <a class="dest-card" href="#contact">
+      <img src="C:\Users\ttirt\Downloads\images\WhatsApp Image 2025-12-02 at 14.51.11_f60922a3.jpg" alt="Louvre Abu Dhabi">
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-city">Abu Dhabi</div>
+        <div class="dest-name">Louvre Abu Dhabi</div>
+        <div class="dest-desc">A stunning cultural icon — the world's most ambitious art museum sits where East meets West on Saadiyat Island.</div>
+        <div class="dest-arrow">Explore →</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- Experiences -->
+<section id="experiences">
+  <div class="exp-header">
+    <div>
+      <div class="section-tag">Curated</div>
+      <h2 class="section-title">Unforgettable <em>Experiences</em></h2>
+    </div>
+    <p style="color:var(--text-muted);font-size:0.9rem;max-width:380px;line-height:1.8;text-align:right;">Every Golden Horizons experience is personally curated by our team of luxury travel specialists.</p>
+  </div>
+  <div class="exp-grid">
+    <div class="exp-card reveal tilt-card">
+      <img src="C:\Users\ttirt\Downloads\images\WhatsApp Image 2026-01-02 at 1.27.55 PM.jpeg" alt="Desert Safari" class="exp-img">
+      <div class="exp-body">
+        <div class="exp-tag">Adventure · Nature</div>
+        <div class="exp-title">Desert Safari & Stargazing</div>
+        <div class="exp-desc">Ride over golden dunes in luxury 4x4s, witness a breathtaking sunset over the Arabian Desert, enjoy a traditional Bedouin camp dinner, and sleep under a billion stars in the most pristine night sky you'll ever see.</div>
+        <div class="exp-footer">
+          <div class="exp-price">From $380<span>per person</span></div>
+          <a href="#contact" class="exp-btn">Book</a>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card reveal tilt-card" style="transition-delay:0.1s">
+      <img src="C:\Users\ttirt\Downloads\images\WhatsApp Image 2025-12-15 at 18.27.23_4df43c00.jpg" alt="Yacht Tour" class="exp-img">
+      <div class="exp-body">
+        <div class="exp-tag">Luxury · Marine</div>
+        <div class="exp-title">Private Yacht Dubai Marina</div>
+        <div class="exp-desc">Sail aboard a private superyacht through Dubai Marina — the world's largest man-made marina. Spot the Burj Al Arab from the water, snorkel in crystal-clear Gulf waters, and dine with a private chef.</div>
+        <div class="exp-footer">
+          <div class="exp-price">From $1,200<span>per charter</span></div>
+          <a href="#contact" class="exp-btn">Book</a>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card reveal tilt-card" style="transition-delay:0.2s">
+      <img src="C:\Users\ttirt\Downloads\images\IMG-20251018-WA0025.jpg" alt="Falcon Experience" class="exp-img">
+      <div class="exp-body">
+        <div class="exp-tag">Heritage · Culture</div>
+        <div class="exp-title">Royal Falconry Heritage Tour</div>
+        <div class="exp-desc">Experience a 4,000-year-old Arab tradition — train with master falconers, visit the Abu Dhabi Falcon Hospital, and explore the historic heritage villages with expert cultural guides.</div>
+        <div class="exp-footer">
+          <div class="exp-price">From $560<span>per person</span></div>
+          <a href="#contact" class="exp-btn">Book</a>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card reveal tilt-card" style="transition-delay:0.3s">
+      <img src="C:\Users\ttirt\Downloads\images\IMG-20250722-WA0012.jpg" alt="Helicopter Tour" class="exp-img">
+      <div class="exp-body">
+        <div class="exp-tag">Sky · Exclusive</div>
+        <div class="exp-title">Helicopter City Tour</div>
+        <div class="exp-desc">See Dubai from the skies — soar over the Burj Khalifa, Palm Jumeirah, World Islands, and Downtown Dubai in a private helicopter with a panoramic 40-minute aerial experience.</div>
+        <div class="exp-footer">
+          <div class="exp-price">From $700<span>per person</span></div>
+          <a href="#contact" class="exp-btn">Book</a>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card reveal tilt-card" style="transition-delay:0.4s">
+      <img src="C:\Users\ttirt\Downloads\images\IMG-20251018-WA0036.jpg" alt="Fine Dining" class="exp-img">
+      <div class="exp-body">
+        <div class="exp-tag">Culinary · Exclusive</div>
+        <div class="exp-title">Skyline Fine Dining Experience</div>
+        <div class="exp-desc">Dine at Atmosphere, the world's highest restaurant at 442m in the Burj Khalifa. A curated 7-course Emirati-fusion tasting menu with a world-class sommelier and panoramic city views.</div>
+        <div class="exp-footer">
+          <div class="exp-price">From $450<span>per person</span></div>
+          <a href="#contact" class="exp-btn">Book</a>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card reveal tilt-card" style="transition-delay:0.5s">
+      <img src="C:\Users\ttirt\Downloads\images\IMG-20251018-WA0044.jpg" alt="Luxury Hotel" class="exp-img">
+      <div class="exp-body">
+        <div class="exp-tag">Stay · Opulence</div>
+        <div class="exp-title">7-Star Hotel Package</div>
+        <div class="exp-desc">Experience the legendary Burj Al Arab — the world's only 7-star hotel. Your private butler, Rolls-Royce transfers, underwater suites, and gold-plated interiors await your arrival.</div>
+        <div class="exp-footer">
+          <div class="exp-price">From $3,500<span>per night</span></div>
+          <a href="#contact" class="exp-btn">Book</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Parallax Banner -->
+<div class="parallax-banner">
+  <div class="parallax-bg" id="parallaxBg"></div>
+  <div class="parallax-content">
+    <h2>Abu Dhabi:<br><em>The Soul of Arabia</em></h2>
+    <p>The UAE's capital is a city where culture, power, and beauty converge — home to one of the world's largest mosques, a Formula 1 circuit, and an island of world-class museums.</p>
+    <a href="#contact" class="btn-primary">Plan Your Visit</a>
+  </div>
+</div>
+
+<!-- Itinerary -->
+<section id="itinerary">
+  <div class="itin-inner">
+    <div class="itin-header reveal">
+      <div class="section-tag">Packages</div>
+      <h2 class="section-title">Choose Your <em>Journey</em></h2>
+      <p style="color:var(--text-muted);font-size:0.9rem;max-width:500px;margin:1rem auto 0;line-height:1.8;">Crafted itineraries for every kind of traveller — from weekend escapes to full luxury odysseys.</p>
+    </div>
+    <div class="itin-tabs">
+      <button class="itin-tab active" onclick="switchTab('dubai')">Dubai 5 Days</button>
+      <button class="itin-tab" onclick="switchTab('abudhabi')">Abu Dhabi 4 Days</button>
+      <button class="itin-tab" onclick="switchTab('combined')">Grand UAE 9 Days</button>
+    </div>
+    <div class="itin-content active" id="tab-dubai">
+      <div class="itin-days">
+        <div class="day-card reveal">
+          <div class="day-num">01</div>
+          <div class="day-label">Day One</div>
+          <div class="day-title">Arrival & Downtown Magic</div>
+          <ul class="day-items">
+            <li>VIP airport transfer in luxury car</li>
+            <li>Check-in at Atlantis The Palm or Armani Hotel</li>
+            <li>Sunset visit to Burj Khalifa observation deck</li>
+            <li>Dinner at a rooftop restaurant with skyline views</li>
+            <li>Dubai Fountain show — world's largest dancing fountain</li>
+          </ul>
+        </div>
+        <div class="day-card reveal" style="transition-delay:0.1s">
+          <div class="day-num">02</div>
+          <div class="day-label">Day Two</div>
+          <div class="day-title">Desert & Cultural Immersion</div>
+          <ul class="day-items">
+            <li>Morning visit to Al Fahidi Historical District</li>
+            <li>Abra ride across Dubai Creek</li>
+            <li>Gold Souk & Spice Souk exploration</li>
+            <li>Afternoon desert safari with dune bashing</li>
+            <li>Traditional Bedouin dinner with live entertainment</li>
+          </ul>
+        </div>
+        <div class="day-card reveal" style="transition-delay:0.2s">
+          <div class="day-num">03</div>
+          <div class="day-label">Day Three</div>
+          <div class="day-title">Palm, Marina & Luxury</div>
+          <ul class="day-items">
+            <li>Palm Jumeirah monorail and The Pointe</li>
+            <li>Atlantis Aquaventure Waterpark (optional)</li>
+            <li>Sunset cruise through Dubai Marina</li>
+            <li>Dinner at Nobu or Zuma Dubai</li>
+            <li>Dubai Marina Walk night stroll</li>
+          </ul>
+        </div>
+        <div class="day-card reveal" style="transition-delay:0.3s">
+          <div class="day-num">04</div>
+          <div class="day-label">Day Four</div>
+          <div class="day-title">Shopping & Sky</div>
+          <ul class="day-items">
+            <li>Dubai Mall — world's largest mall exploration</li>
+            <li>Dubai Aquarium & Underwater Zoo</li>
+            <li>Helicopter tour over the city (optional)</li>
+            <li>Dinner at Atmosphere, Burj Khalifa</li>
+            <li>Illuminations show at Downtown Dubai</li>
+          </ul>
+        </div>
+        <div class="day-card reveal" style="transition-delay:0.4s">
+          <div class="day-num">05</div>
+          <div class="day-label">Day Five</div>
+          <div class="day-title">Farewell in Style</div>
+          <ul class="day-items">
+            <li>Morning spa at Four Seasons Resort</li>
+            <li>Last shopping at Jumeirah Beach Road boutiques</li>
+            <li>Lunch at iconic Seven Sisters restaurant</li>
+            <li>Departures lounge — Emirates First Class</li>
+            <li>Private VIP farewell transfer</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="itin-content" id="tab-abudhabi">
+      <div class="itin-days">
+        <div class="day-card reveal">
+          <div class="day-num">01</div>
+          <div class="day-label">Day One</div>
+          <div class="day-title">Grand Mosque & Arrival</div>
+          <ul class="day-items">
+            <li>VIP airport welcome at Zayed International Airport</li>
+            <li>Check-in at Emirates Palace Mandarin Oriental</li>
+            <li>Evening visit to Sheikh Zayed Grand Mosque</li>
+            <li>Sunset dinner at elegant hotel terrace</li>
+          </ul>
+        </div>
+        <div class="day-card reveal" style="transition-delay:0.1s">
+          <div class="day-num">02</div>
+          <div class="day-label">Day Two</div>
+          <div class="day-title">Culture Island</div>
+          <ul class="day-items">
+            <li>Louvre Abu Dhabi — priceless art collection</li>
+            <li>Saadiyat Island beach exploration</li>
+            <li>Yas Marina Circuit — F1 track experience (optional)</li>
+            <li>Ferrari World Abu Dhabi rides</li>
+          </ul>
+        </div>
+        <div class="day-card reveal" style="transition-delay:0.2s">
+          <div class="day-num">03</div>
+          <div class="day-label">Day Three</div>
+          <div class="day-title">Heritage & Nature</div>
+          <ul class="day-items">
+            <li>Royal falconry demonstration</li>
+            <li>Al Ain Oasis — UNESCO World Heritage Site</li>
+            <li>Qasr Al Sarab desert resort sunset</li>
+            <li>Traditional Emirati dinner experience</li>
+          </ul>
+        </div>
+        <div class="day-card reveal" style="transition-delay:0.3s">
+          <div class="day-num">04</div>
+          <div class="day-label">Day Four</div>
+          <div class="day-title">Corniche & Farewell</div>
+          <ul class="day-items">
+            <li>Abu Dhabi Corniche morning stroll</li>
+            <li>Etihad Towers observation deck</li>
+            <li>Final luxury shopping at Galleria Mall</li>
+            <li>Farewell lunch with city views</li>
+            <li>VIP transfer and airport departure</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="itin-content" id="tab-combined">
+      <div class="itin-days">
+        <div class="day-card reveal">
+          <div class="day-num">1-2</div>
+          <div class="day-label">Days 1-2</div>
+          <div class="day-title">Dubai: Arrival & Icons</div>
+          <ul class="day-items">
+            <li>Burj Khalifa, Dubai Fountain, downtown luxury</li>
+            <li>Helicopter tour over the city skyline</li>
+          </ul>
+        </div>
+        <div class="day-card reveal" style="transition-delay:0.1s">
+          <div class="day-num">3-4</div>
+          <div class="day-label">Days 3-4</div>
+          <div class="day-title">Dubai: Desert & Sea</div>
+          <ul class="day-items">
+            <li>Desert safari, Bedouin camp, stargazing</li>
+            <li>Private yacht through Dubai Marina</li>
+          </ul>
+        </div>
+        <div class="day-card reveal" style="transition-delay:0.2s">
+          <div class="day-num">5</div>
+          <div class="day-label">Day 5</div>
+          <div class="day-title">Dubai: Culture & Souk</div>
+          <ul class="day-items">
+            <li>Al Fahidi Historical Neighbourhood</li>
+            <li>Gold & Spice Souks, Creek abra ride</li>
+          </ul>
+        </div>
+        <div class="day-card reveal" style="transition-delay:0.3s">
+          <div class="day-num">6-7</div>
+          <div class="day-label">Days 6-7</div>
+          <div class="day-title">Abu Dhabi: Culture</div>
+          <ul class="day-items">
+            <li>Sheikh Zayed Grand Mosque sunset visit</li>
+            <li>Louvre Abu Dhabi, Saadiyat Island</li>
+          </ul>
+        </div>
+        <div class="day-card reveal" style="transition-delay:0.4s">
+          <div class="day-num">8-9</div>
+          <div class="day-label">Days 8-9</div>
+          <div class="day-title">Abu Dhabi: Heritage & Farewell</div>
+          <ul class="day-items">
+            <li>Yas Island F1 circuit, Ferrari World</li>
+            <li>Al Ain heritage day trip</li>
+            <li>Grand farewell gala dinner</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery">
+  <div class="gallery-header reveal">
+    <div class="section-tag" style="justify-content:center">
+      <div style="width:40px;height:1px;background:var(--gold)"></div>
+      Visual Stories
+    </div>
+    <h2 class="section-title" style="text-align:center;margin-top:0.5rem;">A Glimpse of <em>Paradise</em></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="C:\Users\ttirt\Downloads\images\WhatsApp Image 2026-01-02 at 1.25.31 PM.jpeg" alt="Dubai Skyline">
+      <div class="gallery-label">Dubai Night Skyline</div>
+    </div>
+    <div class="gallery-item">
+      <img src="D:\Dubai\WhatsApp Image 2025-08-26 at 18.04.14_396bf3ed.jpg" alt="Grand Mosque">
+      <div class="gallery-label">Sheikh Zayed Mosque</div>
+    </div>
+    <div class="gallery-item">
+      <img src="C:\Users\ttirt\Downloads\images\WhatsApp Image 2026-01-02 at 1.28.07 PM.jpeg" alt="Desert">
+      <div class="gallery-label">Arabian Desert Safari</div>
+    </div>
+    <div class="gallery-item">
+      <img src="C:\Users\ttirt\Downloads\images\WhatsApp Image 2026-01-02 at 1.38.15 PM (2).jpeg" alt="Louvre Abu Dhabi">
+      <div class="gallery-label">Louvre Abu Dhabi</div>
+    </div>
+    <div class="gallery-item">
+      <img src="C:\Users\ttirt\Downloads\images\WhatsApp Image 2026-01-02 at 1.38.19 PM (1).jpeg" alt="Luxury Hotel">
+      <div class="gallery-label">Luxury Resorts</div>
+    </div>
+    <div class="gallery-item">
+      <img src="C:\Users\ttirt\Downloads\images\WhatsApp Image 2025-12-02 at 14.51.30_19a4b6cb.jpg" alt="Abu Dhabi">
+      <div class="gallery-label">Abu Dhabi Corniche</div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials">
+  <div class="test-header reveal">
+    <div class="section-tag">Testimonials</div>
+    <h2 class="section-title">Voices of Our <em>Guests</em></h2>
+  </div>
+  <div style="overflow:hidden">
+    <div class="test-track">
+      <!-- Original set -->
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">Golden Horizons turned our anniversary into the most magical journey of our lives. The private yacht, the desert dinner under stars — I still can't believe it was real. This team goes beyond beyond.</p>
+        <div class="test-author">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah" class="test-avatar">
+          <div>
+            <div class="test-name">Sarah Mitchell</div>
+            <div class="test-loc">London, UK</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">As a business travel consultant, I've used many agencies. Golden Horizons is in a completely different league. Our corporate delegation was blown away by every detail — from the Rolls-Royce transfers to the Burj Al Arab suite.</p>
+        <div class="test-author">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="James" class="test-avatar">
+          <div>
+            <div class="test-name">James Whitmore</div>
+            <div class="test-loc">New York, USA</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">The Grand Mosque at sunset brought me to tears. The Louvre was breathtaking. The falcon experience was spiritual. This entire journey through UAE shifted something in my soul. Pure magic.</p>
+        <div class="test-author">
+          <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Aiko" class="test-avatar">
+          <div>
+            <div class="test-name">Aiko Tanaka</div>
+            <div class="test-loc">Tokyo, Japan</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">Flew our entire family — 14 people — for a milestone celebration. Golden Horizons coordinated flawlessly. The private Bedouin camp, the rooftop dinners, the helicopter — our family still talks about it every day.</p>
+        <div class="test-author">
+          <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Carlos" class="test-avatar">
+          <div>
+            <div class="test-name">Carlos Mendez</div>
+            <div class="test-loc">São Paulo, Brazil</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">I visited 47 countries. Nothing — and I mean nothing — prepared me for what Dubai and Abu Dhabi had to offer. The combination of ancient culture and futuristic ambition is overwhelming in the most beautiful way.</p>
+        <div class="test-author">
+          <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Elena" class="test-avatar">
+          <div>
+            <div class="test-name">Elena Volkov</div>
+            <div class="test-loc">Moscow, Russia</div>
+          </div>
+        </div>
+      </div>
+      <!-- Duplicate for infinite scroll -->
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">Golden Horizons turned our anniversary into the most magical journey of our lives. The private yacht, the desert dinner under stars — I still can't believe it was real. This team goes beyond beyond.</p>
+        <div class="test-author">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah" class="test-avatar">
+          <div>
+            <div class="test-name">Sarah Mitchell</div>
+            <div class="test-loc">London, UK</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">As a business travel consultant, I've used many agencies. Golden Horizons is in a completely different league. Our corporate delegation was blown away by every detail — from the Rolls-Royce transfers to the Burj Al Arab suite.</p>
+        <div class="test-author">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="James" class="test-avatar">
+          <div>
+            <div class="test-name">James Whitmore</div>
+            <div class="test-loc">New York, USA</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">The Grand Mosque at sunset brought me to tears. The Louvre was breathtaking. The falcon experience was spiritual. This entire journey through UAE shifted something in my soul. Pure magic.</p>
+        <div class="test-author">
+          <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Aiko" class="test-avatar">
+          <div>
+            <div class="test-name">Aiko Tanaka</div>
+            <div class="test-loc">Tokyo, Japan</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">Flew our entire family — 14 people — for a milestone celebration. Golden Horizons coordinated flawlessly. The private Bedouin camp, the rooftop dinners, the helicopter — our family still talks about it every day.</p>
+        <div class="test-author">
+          <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Carlos" class="test-avatar">
+          <div>
+            <div class="test-name">Carlos Mendez</div>
+            <div class="test-loc">São Paulo, Brazil</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">I visited 47 countries. Nothing prepared me for what Dubai and Abu Dhabi had to offer. The combination of ancient culture and futuristic ambition is overwhelming in the most beautiful way.</p>
+        <div class="test-author">
+          <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Elena" class="test-avatar">
+          <div>
+            <div class="test-name">Elena Volkov</div>
+            <div class="test-loc">Moscow, Russia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-info reveal-left">
+    <div class="section-tag">Book Your Journey</div>
+    <h2 class="section-title">Begin Your <em>Dream</em><br>Experience</h2>
+    <div class="gold-divider"></div>
+    <p class="section-text">Our team of luxury travel specialists is available 24/7 to craft your perfect UAE experience. From private jets to royal suite bookings, we handle every detail with absolute precision.</p>
+    <div class="contact-details" style="margin-top:2.5rem">
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-detail-text">
+          <strong>Phone</strong>
+          +971 4 888 9999 (Dubai) · +971 2 777 8888 (Abu Dhabi)
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-detail-text">
+          <strong>Email</strong>
+          concierge@goldenhorizons.ae
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div class="contact-detail-text">
+          <strong>Offices</strong>
+          DIFC, Dubai · Corniche Road, Abu Dhabi · International offices in London, New York & Tokyo
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div class="contact-detail-text">
+          <strong>Hours</strong>
+          24/7 Concierge Service — We never sleep so you always can.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="booking-form reveal-right">
+    <div class="form-title">Request a Consultation</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" placeholder="Your first name">
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" placeholder="Your last name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" placeholder="your@email.com">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Destination</label>
+        <select>
+          <option>Dubai</option>
+          <option>Abu Dhabi</option>
+          <option>Both Cities</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Group Size</label>
+        <select>
+          <option>Solo (1)</option>
+          <option>Couple (2)</option>
+          <option>Family (3-6)</option>
+          <option>Group (7+)</option>
+          <option>Corporate</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Travel Date</label>
+        <input type="date">
+      </div>
+      <div class="form-group">
+        <label>Budget Range</label>
+        <select>
+          <option>$5,000 – $10,000</option>
+          <option>$10,000 – $25,000</option>
+          <option>$25,000 – $50,000</option>
+          <option>$50,000+</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Special Requests</label>
+      <textarea placeholder="Tell us about your dream experience — honeymoon, corporate retreat, family celebration..."></textarea>
+    </div>
+    <button class="form-submit" onclick="this.textContent='✓ Request Sent — We\'ll Contact You Within 2 Hours'">Request My Luxury Package</button>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">Golden<span> Horizons</span></a>
+      <p class="footer-about">The UAE's premier luxury tourism agency, crafting extraordinary journeys for discerning travellers since 2013. We don't just plan trips — we create memories that last a lifetime.</p>
+      <div class="social-links">
+        <a href="#" class="social-link">in</a>
+        <a href="#" class="social-link">ig</a>
+        <a href="#" class="social-link">fb</a>
+        <a href="#" class="social-link">yt</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul class="footer-links">
+        <li><a href="#">Downtown Dubai</a></li>
+        <li><a href="#">Palm Jumeirah</a></li>
+        <li><a href="#">Dubai Marina</a></li>
+        <li><a href="#">Sheikh Zayed Mosque</a></li>
+        <li><a href="#">Saadiyat Island</a></li>
+        <li><a href="#">Yas Island</a></li>
+        <li><a href="#">Al Ain</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Experiences</h4>
+      <ul class="footer-links">
+        <li><a href="#">Desert Safaris</a></li>
+        <li><a href="#">Yacht Charters</a></li>
+        <li><a href="#">Helicopter Tours</a></li>
+        <li><a href="#">Cultural Tours</a></li>
+        <li><a href="#">Fine Dining</a></li>
+        <li><a href="#">Luxury Stays</a></li>
+        <li><a href="#">Corporate Events</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Our Team</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Partners</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Golden Horizons Tourism LLC. Licensed by Dubai Tourism (DTCM). All Rights Reserved.</p>
+    <p class="footer-copy">Crafted with ♦ in Dubai, UAE</p>
+  </div>
+</footer>
+
+<script>
+// Loader
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const loader = document.getElementById('loader');
+    loader.style.opacity = '0';
+    loader.style.transform = 'translateY(-100%)';
+    setTimeout(() => loader.style.display = 'none', 800);
+  }, 2500);
+});
+
+// Custom Cursor
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0;
+let ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top = mouseY + 'px';
+});
+
+function animateRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  cursorRing.style.left = ringX + 'px';
+  cursorRing.style.top = ringY + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a, button, .dest-card, .exp-card, .gallery-item').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+    cursorRing.style.width = '60px';
+    cursorRing.style.height = '60px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    cursorRing.style.width = '40px';
+    cursorRing.style.height = '40px';
+  });
+});
+
+// Navbar scroll
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if (window.scrollY > 80) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+});
+
+// Particles
+const particlesContainer = document.getElementById('particles');
+for (let i = 0; i < 40; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDuration = (Math.random() * 10 + 8) + 's';
+  p.style.animationDelay = (Math.random() * 8) + 's';
+  p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
+  p.style.opacity = Math.random() * 0.8;
+  particlesContainer.appendChild(p);
+}
+
+// Parallax
+window.addEventListener('scroll', () => {
+  const pb = document.getElementById('parallaxBg');
+  if (pb) {
+    const rect = pb.parentElement.getBoundingClientRect();
+    const offset = rect.top * 0.4;
+    pb.style.transform = `translateY(${offset}px)`;
+  }
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stat-item').forEach(el => observer.observe(el));
+
+// Animated counters
+const counters = document.querySelectorAll('[data-target]');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const target = parseInt(entry.target.dataset.target);
+      let current = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        entry.target.textContent = Math.floor(current) + (target === 98 ? '%' : (target >= 100 ? '+' : '+'));
+      }, 25);
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+counters.forEach(c => counterObserver.observe(c));
+
+// Itinerary tabs
+function switchTab(name) {
+  document.querySelectorAll('.itin-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.itin-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// 3D card tilt
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (y - centerY) / centerY * -5;
+    const rotateY = (x - centerX) / centerX * 5;
+    card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(5px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(600px) rotateX(0) rotateY(0) translateZ(0)';
+  });
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', (e) => {
+    const target = document.querySelector(anchor.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>
